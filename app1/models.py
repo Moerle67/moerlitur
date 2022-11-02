@@ -48,7 +48,7 @@ class Prozessor(models.Model):
 class Hersteller(models.Model):
     hersteller = models.CharField(max_length=50, verbose_name="Hersteller")
     def __str__(self):
-        return f"{self.hersteller})"
+        return f"{self.hersteller}"
     class Meta:
         verbose_name_plural = "Hersteller"
         verbose_name = "Hersteller"
@@ -134,7 +134,7 @@ class Massenspeicher(models.Model):
     comment = models.CharField(max_length=50, verbose_name="Kommentar", blank=True)
 
     def __str__(self):
-        return f"MS{self.id:06} - {self.speichertyp} {self.computer}"
+        return f"MS{self.id:06} - {self.speichertyp}"
     class Meta:
         verbose_name_plural = "Massensspeicher"
         verbose_name = "Massensspeicher"
@@ -156,7 +156,7 @@ class Arbeitsspeicher(models.Model):
     hersteller = ForeignKey(Hersteller, on_delete=models.RESTRICT, verbose_name="Hersteller")
     seriennummer = models.CharField(max_length=50, verbose_name="SN", blank=True)
     def __str__(self):
-        return f"AS{self.id:06} - {self.speichertyp} / {self.computer}"
+        return f"AS{self.id:06} - {self.speichertyp} "
     class Meta:
         verbose_name_plural = "Arbeitsspeicher"
         verbose_name = "Arbeitsspeicher"
