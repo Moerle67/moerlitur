@@ -27,7 +27,7 @@ class Raum(models.Model):
     
 class Standort(models.Model):
     raum = models.ForeignKey(Raum, on_delete=models.RESTRICT,verbose_name="Raum")
-    bezeichnung = models.CharField(max_length=50, verbose_name="Behälter")   
+    bezeichnung = models.CharField(max_length=50, verbose_name="Standort")   
     def __str__(self):
         return f"{self.bezeichnung} - {self.raum}"
     class Meta:
@@ -44,13 +44,26 @@ class Prozessor(models.Model):
         verbose_name_plural = "Prozessoren"
         verbose_name = "Prozessor"
 
+class Hersteller(models.Model):
+    hersteller = models.CharField(max_length=50, verbose_name="Hersteller")
+    def __str__(self):
+        return f"{self.hersteller})"
+    class Meta:
+        verbose_name_plural = "Hersteller"
+        verbose_name = "Hersteller"
+
 class Computer(models.Model):
     standort = models.ForeignKey(Standort, on_delete=models.RESTRICT,verbose_name="Standort")
     prozessor = models.ForeignKey(Prozessor, on_delete=models.RESTRICT,verbose_name="Prozessor")
     standort = models.ForeignKey(Standort, on_delete=models.RESTRICT,verbose_name="Standort")
+    hersteller = models.ForeignKey(Hersteller, on_delete=models.RESTRICT,verbose_name="Hersteller", blank=True)
+    # Zusatzfelder
+    product = models.CharField(max_length=50, verbose_name="Produkt", blank = True)
+    modell = models.CharField(max_length=50, verbose_name="Modell", blank = True)
+    seriennummer = models.CharField(max_length=50, verbose_name="SN", blank = True)
     zusatzinfo = models.CharField(max_length=50, verbose_name="Zusatzinfo", blank = True)
     def __str__(self):
-        return f"C{self.id:08}/{self.prozessor.bezeichnung} {self.zusatzinfo}"
+        return f"C{self.id:08}/{self.prozessor.bezeichnung} - {self.hersteller}"
     class Meta:
         verbose_name_plural = "Computer"
         verbose_name = "Computer"
@@ -113,7 +126,10 @@ class Massenspeichertyp(models.Model):
 
 class Massenspeicher(models.Model):
     speichertyp = models.ForeignKey(Massenspeichertyp, on_delete=models.RESTRICT)
+    hersteller = models.ForeignKey(Hersteller, on_delete=models.RESTRICT,verbose_name="Hersteller")
+    seriennummer = models.CharField(max_length=50, verbose_name="SN", blank=True)
     computer = ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True)
+    comment = models.CharField(max_length=50, verbose_name="Kommentar", blank=True)
 
     def __str__(self):
         return f"MS{self.id:06} - {self.speichertyp} {self.computer}"
@@ -134,8 +150,11 @@ class Arbeitsspeichertyp(models.Model):
 
 class Arbeitsspeicher(models.Model):
     speichertyp = models.ForeignKey(Arbeitsspeichertyp, on_delete=models.RESTRICT) 
+    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True)
+    hersteller = ForeignKey(Hersteller, on_delete=models.RESTRICT, verbose_name="Hersteller")
+    seriennummer = models.CharField(max_length=50, verbose_name="SN")
     def __str__(self):
-        return f"AS{self.id:06} - {self.speichertyp}"
+        return f"AS{self.id:06} - {self.speichertyp} / {self.computer}"
     class Meta:
         verbose_name_plural = "Arbeitsspeicher"
         verbose_name = "Arbeitsspeicher"

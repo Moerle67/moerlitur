@@ -7,6 +7,7 @@ admin.site.register(Ort)
 admin.site.register(Raum)
 admin.site.register(Standort)
 
+admin.site.register(Hersteller)
 admin.site.register(Prozessor)
 admin.site.register(Computer)
 
