@@ -9,13 +9,14 @@ Computer
         <div class="row border">
             <div class="col-3 border">
                 <details>
-                    <summary><a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">{{einzel_rechner.0.0}}</a><br /></summary>
-                    <a href="/admin/app1/standort/{{einzel_rechner.0.1.id}}/change/" target="_blank">{{einzel_rechner.0.1}}</a>
+                    <summary><a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">C{{einzel_rechner.0.2}}</a></summary>
+                    <a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">{{einzel_rechner.0.1}}</a><br />
+                    <a href="/admin/app1/standort/{{einzel_rechner.0.1.id}}/change/" target="_blank">{{einzel_rechner.0.0}}</a>
                 </details>
             </div>
             <div class="col-3 border">
                 <details>
-                    <summary>Arbeitsspeicher {{einzel_rechner.2}} GB</summary>
+                    <summary>{{einzel_rechner.3}} x Arbeitsspeicher {{einzel_rechner.2}} GB</summary>
                     {% for as_einzel in einzel_rechner.1%}
                         <a href="/admin/app1/arbeitsspeicher/{{as_einzel.1}}/change/" target="_blank">{{as_einzel.0}}</a><br />
                     {% endfor %}
@@ -23,8 +24,8 @@ Computer
             </div>
             <div class="col-3 border">
                 <details>
-                <summary>{{einzel_rechner.4}} x Massenspeicher</summary>
-                {% for ms_einzel in einzel_rechner.3%}
+                <summary>{{einzel_rechner.5}} x Massenspeicher</summary>
+                {% for ms_einzel in einzel_rechner.4%}
                     <a href="/admin/app1/massenspeicher/{{ms_einzel.1}}/change/" target="_blank">{{ms_einzel.0}}</a><br />
                 {% endfor %}
                 </details>

@@ -10,15 +10,18 @@ def index(request):
     antwort = []
     for einzel_computer in liste_computer:
         rechner = []
-        rechner.append((einzel_computer,einzel_computer.standort, einzel_computer.id))
+        rechner.append((einzel_computer,einzel_computer.standort, f"{einzel_computer.id:08}"))
         liste_arbeitsspeicher = Arbeitsspeicher.objects.filter(computer=einzel_computer)
         summe = 0
         as_liste = []
+        anzahl = 0
         for arbeitsspeicher in liste_arbeitsspeicher:
             as_liste.append((arbeitsspeicher, arbeitsspeicher.id))
             summe += arbeitsspeicher.speichertyp.groesse
+            anzahl += 1
         rechner.append(as_liste)
         rechner.append(summe)
+        rechner.append(anzahl)
         liste_massenspeicher = Massenspeicher.objects.filter(computer=einzel_computer)
         ms_liste = []
         anzahl = 0
