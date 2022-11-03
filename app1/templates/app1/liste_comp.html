@@ -7,6 +7,7 @@ Computer
 {% block content %}
     {% for einzel_rechner in rechner %}
         <div class="row border">
+            {% comment %} Computer {% endcomment %}
             <div class="col-3 border">
                 <details>
                     <summary><a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">C{{einzel_rechner.0.2}}</a></summary>
@@ -14,6 +15,7 @@ Computer
                     <a href="/admin/app1/standort/{{einzel_rechner.0.1.id}}/change/" target="_blank">{{einzel_rechner.0.0}}</a>
                 </details>
             </div>
+            {% comment %} Arbeitsspeicher {% endcomment %}
             <div class="col-3 border">
                 <details>
                     <summary>{{einzel_rechner.3}} x Arbeitsspeicher {{einzel_rechner.2}} GB</summary>
@@ -22,6 +24,7 @@ Computer
                     {% endfor %}
                 </details>
             </div>
+            {% comment %} Massenspeicher {% endcomment %}
             <div class="col-3 border">
                 <details>
                 <summary>{{einzel_rechner.5}} x Massenspeicher</summary>
@@ -29,6 +32,23 @@ Computer
                     <a href="/admin/app1/massenspeicher/{{ms_einzel.1}}/change/" target="_blank">{{ms_einzel.0}}</a><br />
                 {% endfor %}
                 </details>
+            </div>
+            {% comment %} NIC {% endcomment %}
+            <div class="col-3 border">
+                {% if  einzel_rechner.7 < 2%}
+                    {% if einzel_rechner.7 == 0 %}
+                        <p>Keine Netzwerkkarte</p>
+                    {% else %}
+                        <a href="/admin/app1/nic/{{einzel_rechner.6.0.1}}/change/" target="_blank">{{einzel_rechner.6.0.0}}</a>
+                    {% endif %}
+                {% else %}
+                    <details>
+                    <summary>{{einzel_rechner.7}} x Netzwerkkarten</summary>
+                    {% for nic_einzel in einzel_rechner.6%}
+                        <a href="/admin/app1/nic/{{nic_einzel.1}}/change/" target="_blank">{{nic_einzel.0}}</a><br />
+                    {% endfor %}
+                    </details>
+                {% endif %}
             </div>
         </div>
     {% endfor %}

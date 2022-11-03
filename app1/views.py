@@ -30,6 +30,15 @@ def index(request):
             anzahl += 1
         rechner.append(ms_liste)
         rechner.append(anzahl)
+        liste_nic = NIC.objects.filter(computer=einzel_computer)
+        nic_liste = []
+        anzahl = 0
+        for nic in liste_nic:
+            nic_liste.append((nic.mac, nic.id))
+            anzahl += 1
+        rechner.append(nic_liste)
+        rechner.append(anzahl)
+
         antwort.append(rechner)
     #print(antwort)    
     return render(request, 'app1/liste_comp.html', {'rechner': antwort})
