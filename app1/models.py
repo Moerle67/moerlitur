@@ -172,7 +172,7 @@ class NICTyp(models.Model):
 
 class NIC(models.Model):
     typ = models.ForeignKey(NICTyp, on_delete=models.RESTRICT,verbose_name="Typ")
-    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank=True, null = True)
+    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True)
     mac = models.CharField(max_length=50, verbose_name="MAC Adresse")
     kommentar =  models.CharField(max_length=50, verbose_name="Kommentar", blank = True)
     def __str__(self):
