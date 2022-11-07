@@ -130,7 +130,7 @@ class Massenspeicher(models.Model):
     speichertyp = models.ForeignKey(Massenspeichertyp, on_delete=models.RESTRICT)
     hersteller = models.ForeignKey(Hersteller, on_delete=models.RESTRICT,verbose_name="Hersteller")
     seriennummer = models.CharField(max_length=50, verbose_name="SN", blank=True)
-    computer = ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True)
+    computer = ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank=True, null=True)
     comment = models.CharField(max_length=50, verbose_name="Kommentar", blank=True)
 
     def __str__(self):
@@ -152,9 +152,9 @@ class Arbeitsspeichertyp(models.Model):
 
 class Arbeitsspeicher(models.Model):
     speichertyp = models.ForeignKey(Arbeitsspeichertyp, on_delete=models.RESTRICT) 
-    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True)
+    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True, null = True)
     hersteller = ForeignKey(Hersteller, on_delete=models.RESTRICT, verbose_name="Hersteller")
-    seriennummer = models.CharField(max_length=50, verbose_name="SN", blank=True)
+    seriennummer = models.CharField(max_length=50, verbose_name="SN", null=True)
     def __str__(self):
         return f"AS{self.id:06} - {self.speichertyp} "
     class Meta:
@@ -172,7 +172,7 @@ class NICTyp(models.Model):
 
 class NIC(models.Model):
     typ = models.ForeignKey(NICTyp, on_delete=models.RESTRICT,verbose_name="Typ")
-    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True)
+    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True, blank=True)
     mac = models.CharField(max_length=50, verbose_name="MAC Adresse")
     kommentar =  models.CharField(max_length=50, verbose_name="Kommentar", blank = True)
     def __str__(self):
