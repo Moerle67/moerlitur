@@ -1,0 +1,25 @@
+{% extends 'app1/base.html' %}
+
+{% block h1 %}
+Tools
+{% endblock h1 %}
+
+{% block content %}
+    {% for type in liste %}
+        <div class="row border">
+            {% comment %} Computer {% endcomment %}
+            <div class="col-3 border">
+                <a href="/admin/app1/tooltyp/{{type.0.id}}/change/" target="_blank">{{type.0}}</a>
+            </div>
+            {% comment %} Arbeitsspeicher {% endcomment %}
+            <div class="col-9 border">
+                <details>
+                    <summary>Anzahl {{type.2}}</summary>
+                    {% for tool in type.1%}
+                        <a href="/admin/app1/tool/{{tool.id}}/change/" target="_blank">{{tool}}</a><br />
+                    {% endfor %}
+                </details>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}

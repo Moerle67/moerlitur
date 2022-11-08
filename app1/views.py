@@ -44,10 +44,15 @@ def index(request):
     return render(request, 'app1/liste_comp.html', {'rechner': antwort})
 
 def tools(request):
-    liste_tooltypes = ToolTyp.objects.all().order_by('typ')
+    liste_tooltypes_db = ToolTyp.objects.all().order_by('typ')
     antwort = []
-    for type in liste_tooltypes:
-        type = []
-        
-
-    return render(request, 'app1/liste_tools.html', {})
+    for type in liste_tooltypes_db:
+        anzahl = 0
+        liste_tools = []
+        liste_tools_db = Tool.objects.filter(type=type)
+        for tool in liste_tools_db:
+            liste_tools.append(tool)
+            anzahl +=1
+        antwort.append((type,liste_tools,anzahl))
+    print(antwort)
+    return render(request, 'app1/liste_tools.html', {'liste': antwort})
