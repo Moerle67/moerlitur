@@ -181,3 +181,25 @@ class NIC(models.Model):
         verbose_name_plural = "NIC"
         verbose_name = "NIC"
 
+class ToolTyp(models.Model):
+    typ = models.CharField(max_length=50, verbose_name="ToolTyp ")
+    kommentar =  models.CharField(max_length=50, verbose_name="Kommentar", blank = True)
+    def __str__(self):
+        return f"{self.typ}"
+    class Meta:
+        verbose_name_plural = "Tooltyp"
+        verbose_name = "Tooltypen"
+
+
+class Tool(models.Model):
+    standort = models.ForeignKey(Standort, on_delete=models.RESTRICT,verbose_name="Standort")
+    type = models.ForeignKey(ToolTyp, on_delete=models.RESTRICT,verbose_name="Typ")
+    # Zusatzfelder
+    computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True, blank=True)
+    zusatzinfo = models.CharField(max_length=50, verbose_name="Zusatzinfo", blank = True)
+    def __str__(self):
+        return f"T{self.id:08}/{self.type}/{self.standort}"
+    class Meta:
+        verbose_name_plural = "Tools"
+        verbose_name = "Tool"
+

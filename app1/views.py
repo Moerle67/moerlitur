@@ -6,7 +6,7 @@ from .models import *
 
 
 def index(request):
-    liste_computer = Computer.objects.all()
+    liste_computer = Computer.objects.all().order_by('id')
     antwort = []
     for einzel_computer in liste_computer:
         rechner = []
@@ -42,3 +42,12 @@ def index(request):
         antwort.append(rechner)
     #print(antwort)    
     return render(request, 'app1/liste_comp.html', {'rechner': antwort})
+
+def tools(request):
+    liste_tooltypes = ToolTyp.objects.all().order_by('typ')
+    antwort = []
+    for type in liste_tooltypes:
+        type = []
+        
+
+    return render(request, 'app1/liste_tools.html', {})

@@ -27,6 +27,9 @@ admin.site.register(Sorte)
 admin.site.register(NICTyp)
 admin.site.register(NIC)
 
+admin.site.register(ToolTyp)
+admin.site.register(Tool)
+
 
 
 
