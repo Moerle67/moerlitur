@@ -1,0 +1,125 @@
+.k1 {
+    background-color: rgb(209, 222, 223);
+}
+
+.k2 {
+    background-color: aquamarine;
+}
+
+.k3 {
+    background-color: azure;
+}
+
+.card {
+    margin: 0.5em;
+}
+
+.center {
+    text-align: center;
+}
+
+.rechts {
+    text-align: right;
+}
+
+.BereichBtn {
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+
+body {
+    background-image: url(../pics/hintergrund1.png);
+    height: 95vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div {
+
+    /* opacity: .7; */
+    padding: 10px 10px;
+}
+
+.container {
+    background-color: rgb(225, 230, 222, 0.80);
+    border-radius: 20px 20px 20px 20px;
+    margin-top: 2em;
+    box-shadow: 0.2em 0.2em rgb(92, 91, 91);
+    border: 2px solid #414144;
+}
+
+.nav,
+.inhalt {
+    background-color: rgba(225, 230, 222, 0.637);
+    border: 2px solid #1b19a0;
+    border-radius: 10px 30px 10px 30px;
+    box-shadow: 0.2em 0.2em gray;
+    margin-bottom: 0.3em;
+    
+}
+
+center {
+    text-align: center;
+}
+
+button {
+    box-shadow: 0.2em 0.2em gray;
+}
+
+button:hover {
+    box-shadow: 0.1em 0.1em black;
+}
+
+a:link,
+a:visited {
+    color: rgb(29, 29, 31);
+}
+
+a:hover {
+    color: #bf425d;
+}
+
+a:active {
+    color: #800000;
+}
+
+.rot {
+    color: red;
+}
+
+.gruen {
+    color: green;
+}
+
+#dsgvo_hinweis {
+    position: Fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 1000;
+    text-align: Center;
+    cursor: Default;
+    background-color: rgba(234, 239, 241, 0.9);
+    border-top: Solid 1px rgb(168, 188, 198);
+}
+
+a.dsgvo_hinweis_button,
+a.dsgvo_hinweis_button:visited {
+    text-decoration: None;
+    padding: 7px;
+    background-color: rgb(0, 191, 0);
+    color: rgb(255, 255, 255);
+    margin-right: 10px;
+}
+
+a.dsgvo_hinweis_button:hover,
+a.dsgvo_hinweis_button:active {
+    background-color: darkred;
+    color: rgb(255, 255, 255);
+}
+
+.zeile_tn {
+    margin-left: 5em;
+}
