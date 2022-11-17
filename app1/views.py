@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 
 def index(request):
     if request.method == "POST":
-        print(request.POST)
         if 'button' in request.POST:
             if request.POST["button"] == "Anmelden":
                 username = request.POST['login_name']
@@ -60,6 +59,20 @@ def index(request):
     return render(request, 'app1/liste_comp.html', {'rechner': antwort})
 
 def tools(request):
+    if request.method == "POST":
+        if 'button' in request.POST:
+            if request.POST["button"] == "Anmelden":
+                username = request.POST['login_name']
+                password = request.POST['login_pwd']
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    print("loggin")
+                    login(request, user)
+                else:
+                    print("login failed")
+            elif request.POST["button"] == "Abmelden":
+                logout(request)
+        return redirect("/tools")
     liste_tooltypes_db = ToolTyp.objects.all().order_by('typ')
     antwort = []
     for type in liste_tooltypes_db:

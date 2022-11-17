@@ -29,11 +29,12 @@
 
 
 body {
-    background-image: url(../pics/hintergrund1.png);
+    background-image: url(../pics/hintergrund.jpg);
     height: 95vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: fixed;
 }
 
 div {
@@ -43,7 +44,7 @@ div {
 }
 
 .container {
-    background-color: rgb(225, 230, 222, 0.80);
+    background-color: rgb(225, 230, 222, 0.90);
     border-radius: 20px 20px 20px 20px;
     margin-top: 2em;
     box-shadow: 0.2em 0.2em rgb(92, 91, 91);
@@ -60,6 +61,9 @@ div {
     
 }
 
+.navbar {
+    opacity: 0.9
+}
 center {
     text-align: center;
 }

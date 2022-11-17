@@ -32,29 +32,28 @@
             </script>
         {% endif %}
     </head>
-    <body><nav class="navbar navbar-expand-lg bg-light">
+    <body><nav class="navbar navbar-expand-lg bg-light sticky-top fixed-top container">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="/">Moerlitur</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link dropdown-toggle" aria-current="page" href="/tools" data-bs-toggle="dropdown" >Tools</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/tools">Anzeige</a></li>
+                  <li><a class="dropdown-item" href="#">Erfassen</a></li>
+                  <li><a class="dropdown-item" href="#">Suche</a></li>
+                </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
+                <a class="nav-link dropdown-toggle" aria-current="page" href="/tools" data-bs-toggle="dropdown" >Computer</a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="/">Anzeige</a></li>
+                  <li><a class="dropdown-item" href="#">Erfassen</a></li>
+                  <li><a class="dropdown-item" href="#">Suche</a></li>
                 </ul>
               </li>
               <li class="nav-item">
@@ -66,15 +65,17 @@
                 {% csrf_token %}
                 <input class="form-control me-2" type="text" placeholder="Nutzername" aria-label="Nutzername" name="login_name">
                 <input class="form-control me-2" type="password" placeholder="Passwort" aria-label="Passwort" name="login_pwd">
-                <button class="btn btn-outline-success" type="submit" name="button" value="Anmelden">Anmelden</button>
+                <button class="btn btn-outline-success m-2" type="submit" name="button" value="Anmelden">Anmelden</button>
               </form>
             {% else %}
             <form class="d-flex" method="POST" action="/">
               {% csrf_token %}
-              <button class="btn btn-outline-success" type="submit" name="button" value="Abmelden"> {{ user.get_username }} Abmelden</button>
-              {% endif %}
+              <spam align-middle></spam> 
+              <button class="btn btn-outline-success mx-2" type="button">{{user.get_username}}</button>
+              <button class="btn btn-outline-danger mx-2" type="submit" name="button" value="Abmelden">Abmelden</button>
+            {% endif %}
 
-            <form class="d-flex" role="search">
+            <form class="d-flex " role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
