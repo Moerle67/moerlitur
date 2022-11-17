@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth.decorators import permission_required
 # Create your views here.
 
 
@@ -85,3 +85,7 @@ def tools(request):
         antwort.append((type,liste_tools,anzahl))
     print(antwort)
     return render(request, 'app1/liste_tools.html', {'liste': antwort})
+
+@permission_required('app1.change_tools')
+def tools_neu(request):
+    return render(request, 'app1/form_allg.html', {'ueber': "Tool erfassen"})
