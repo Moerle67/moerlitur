@@ -60,6 +60,7 @@ def index(request):
 
 def tools(request):
     if request.method == "POST":
+        print(request.POST)
         if 'button' in request.POST:
             if request.POST["button"] == "Anmelden":
                 username = request.POST['login_name']
@@ -83,9 +84,9 @@ def tools(request):
             liste_tools.append(tool)
             anzahl +=1
         antwort.append((type,liste_tools,anzahl))
-    print(antwort)
     return render(request, 'app1/liste_tools.html', {'liste': antwort})
 
 @permission_required('app1.change_tools')
 def tools_neu(request):
+
     return render(request, 'app1/form_allg.html', {'ueber': "Tool erfassen"})
