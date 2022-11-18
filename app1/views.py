@@ -67,7 +67,7 @@ def tools(request):
                 password = request.POST['login_pwd']
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
-                    print("loggin")
+                    print("login")
                     login(request, user)
                 else:
                     print("login failed")
