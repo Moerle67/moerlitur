@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
+from .classForm import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
 # Create your views here.
@@ -88,5 +89,29 @@ def tools(request):
 
 @permission_required('app1.change_tools')
 def tools_neu(request):
+    def strip(text):
+        return str(text).split("/")[-1]
+    val_ort = ""
+    if request.method == 'POST':
+        print(request.POST)
+        val_ort=request.POST['txt_Ort']
+        try:
+            frm_ort_val = Ort.objects.get(aktiv=True, ort=val_ort)
+            id_ort = frm_ort_val.id
+        except:
+            id_ort = -1
+            print("Ort nicht gefunden")
+        val_raum = request.POST['txt_Raum']
+        try:
+            frm_raum_val = Raum.objects.get(aktiv=True, raum=val_raum)
+            id_raum = frm_raum_val.id
+        except:
+            id_raum = -1
+            print(f"Raum nicht gefunden '{val_raum}'")
 
-    return render(request, 'app1/form_allg.html', {'ueber': "Tool erfassen"})
+    frm_ort = FormDatalist("Ort",Ort.objects.filter(aktiv=True), submit=True, value=val_ort)
+    frm_raum = FormDatalist("Raum",Raum.objects.filter(aktiv=True, ort__id=id_ort ), value=val_raum, submit=True, funktion=strip)
+    frm_platz = FormDatalist("Standort",Standort.objects.filter(aktiv=True, raum__id=id_raum), submit=True, funktion=strip)
+    forms = (frm_ort, frm_raum, frm_platz,formLinie ,FormBtnSave, FormBtnCancel)
+    ueber = "Erfasse Tool"
+    return render(request, 'app1/form_allg.html', {'ueber': "Tool erfassen", 'forms': forms, 'ueber': ueber})

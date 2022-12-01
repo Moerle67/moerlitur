@@ -28,8 +28,12 @@ admin.site.register(NICTyp)
 admin.site.register(NIC)
 
 admin.site.register(ToolTyp)
-admin.site.register(Tool)
-
+@admin.register(Tool)
+class ToolAdmin(admin.ModelAdmin):
+    list_display = ['id', 'type', 'standort', 'bezeichnung']
+    list_filter = ['standort', 'type']
+    search_fields = ['type__typ']
+    ordering = ['type__typ']
 
 
 

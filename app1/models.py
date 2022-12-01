@@ -10,6 +10,7 @@ from django.utils import timezone
 # Create your models here.
 class Ort(models.Model):
     ort = models.CharField(max_length=50, verbose_name="Ort")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.ort}"
     class Meta:
@@ -19,8 +20,9 @@ class Ort(models.Model):
 class Raum(models.Model):
     ort = models.ForeignKey(Ort, on_delete=models.RESTRICT,verbose_name="Ort")
     raum = models.CharField(max_length=50, verbose_name="Raum")   
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
-        return f"{self.raum} - {self.ort}"
+        return f"{self.ort}/{self.raum}"
     class Meta:
         verbose_name_plural = "Räume"
         verbose_name = "Raum"
@@ -28,8 +30,9 @@ class Raum(models.Model):
 class Standort(models.Model):
     raum = models.ForeignKey(Raum, on_delete=models.RESTRICT,verbose_name="Raum")
     bezeichnung = models.CharField(max_length=50, verbose_name="Standort")   
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
-        return f"{self.bezeichnung} - {self.raum}"
+        return f"{self.raum}/{self.bezeichnung}"
     class Meta:
         verbose_name_plural = "Standorte"
         verbose_name = "Standort"
@@ -39,6 +42,7 @@ class Prozessor(models.Model):
     takt =  models.CharField(max_length=10, verbose_name="Takt")
     anzahl_kerne = models.IntegerField(verbose_name="Anzahl Kerne")
     anzahl_kerne_logisch = models.IntegerField(verbose_name="Anzahl logischer Kerne", default=0)
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.bezeichnung}/{self.takt} ({self.anzahl_kerne})"
     class Meta:
@@ -47,6 +51,7 @@ class Prozessor(models.Model):
 
 class Hersteller(models.Model):
     hersteller = models.CharField(max_length=50, verbose_name="Hersteller")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.hersteller}"
     class Meta:
@@ -57,6 +62,7 @@ class Computer(models.Model):
     standort = models.ForeignKey(Standort, on_delete=models.RESTRICT,verbose_name="Standort")
     prozessor = models.ForeignKey(Prozessor, on_delete=models.RESTRICT,verbose_name="Prozessor")
     hersteller = models.ForeignKey(Hersteller, on_delete=models.RESTRICT,verbose_name="Hersteller")
+    aktiv = models.BooleanField(default=True)
 
     # Zusatzfelder
     product = models.CharField(max_length=50, verbose_name="Produkt", blank = True)
@@ -73,6 +79,7 @@ class Computer(models.Model):
 class Einsatzgebiet(models.Model):
     slug = models.CharField(max_length=50,primary_key=True, verbose_name="Abkürzung")
     bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.slug}/{self.bezeichnung}"
     class Meta:
@@ -82,6 +89,7 @@ class Einsatzgebiet(models.Model):
 class Einsatzmoeglichkeit(models.Model):
     computer = models.ForeignKey(Computer, on_delete=models.RESTRICT,verbose_name="Computer")
     einsatzgebiet = models.ForeignKey(Einsatzgebiet, on_delete=models.RESTRICT,verbose_name="Einsatzgebiet")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.computer}/{self.einsatzgebiet}"
     class Meta:
@@ -91,6 +99,7 @@ class Einsatzmoeglichkeit(models.Model):
 
 class Sorte(models.Model):
     Bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung") 
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.bezeichnung}"
     class Meta:
@@ -100,6 +109,7 @@ class Sorte(models.Model):
 class Anschlusstyp(models.Model):
     bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung")
     slug = models.CharField(max_length=50, verbose_name="Anschlusstyp") 
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.slug}"
     class Meta:
@@ -109,6 +119,7 @@ class Anschlusstyp(models.Model):
 class Speicherart(models.Model):
     bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung")
     slug = models.CharField(max_length=50, verbose_name="Typ") 
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.slug}"
     class Meta:
@@ -120,6 +131,7 @@ class Massenspeichertyp(models.Model):
     anschluss = models.ForeignKey(Anschlusstyp, on_delete=models.RESTRICT, verbose_name="Anschluss")
     typ = models.ForeignKey(Speicherart, on_delete=models.RESTRICT, verbose_name="Speicherart")
     groesse = models.CharField(max_length=50, verbose_name="Größe")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.bezeichnung}/{self.typ}/{self.anschluss}/{self.groesse}"
     class Meta:
@@ -132,6 +144,7 @@ class Massenspeicher(models.Model):
     seriennummer = models.CharField(max_length=50, verbose_name="SN", blank=True)
     computer = ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank=True, null=True)
     comment = models.CharField(max_length=50, verbose_name="Kommentar", blank=True)
+    aktiv = models.BooleanField(default=True)
 
     def __str__(self):
         return f"MS{self.id:06} - {self.speichertyp}"
@@ -144,6 +157,7 @@ class Arbeitsspeichertyp(models.Model):
     groesse = models.IntegerField(verbose_name="Größe in GB")
     takt = models.CharField(max_length=50, verbose_name="Takt")
     ecc = models.BooleanField(verbose_name="ECC tauglich")
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.typ}/{self.groesse} GB/{self.takt}"
     class Meta:
@@ -155,6 +169,7 @@ class Arbeitsspeicher(models.Model):
     computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", blank = True, null = True)
     hersteller = ForeignKey(Hersteller, on_delete=models.RESTRICT, verbose_name="Hersteller")
     seriennummer = models.CharField(max_length=50, verbose_name="SN", null=True)
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"AS{self.id:06} - {self.speichertyp} "
     class Meta:
@@ -164,6 +179,7 @@ class Arbeitsspeicher(models.Model):
 class NICTyp(models.Model):
     typ = models.CharField(max_length=50, verbose_name="NIC Typ")
     bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung")    
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.typ}"
     class Meta:
@@ -175,6 +191,7 @@ class NIC(models.Model):
     computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True, blank=True)
     mac = models.CharField(max_length=50, verbose_name="MAC Adresse")
     kommentar =  models.CharField(max_length=50, verbose_name="Kommentar", blank = True)
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"NIC{self.id:06} - {self.typ}/[{self.mac}]"
     class Meta:
@@ -184,6 +201,7 @@ class NIC(models.Model):
 class ToolTyp(models.Model):
     typ = models.CharField(max_length=50, verbose_name="ToolTyp ")
     kommentar =  models.CharField(max_length=50, verbose_name="Kommentar", blank = True)
+    aktiv = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.typ}"
     class Meta:
@@ -194,6 +212,7 @@ class ToolTyp(models.Model):
 class Tool(models.Model):
     standort = models.ForeignKey(Standort, on_delete=models.RESTRICT,verbose_name="Standort")
     type = models.ForeignKey(ToolTyp, on_delete=models.RESTRICT,verbose_name="Typ")
+    aktiv = models.BooleanField(default=True)
     # Zusatzfelder
     bezeichnung = models.CharField(max_length=50, verbose_name="Bezeichnung", blank = True)
     computer = models.ForeignKey(Computer, on_delete=models.RESTRICT, verbose_name="Computer", null = True, blank=True)

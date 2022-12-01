@@ -6,13 +6,13 @@ Tools
 
 {% block content %}
     {% for type in liste %}
-        <div class="row border">
+        <div class="row">
             {% comment %} Computer {% endcomment %}
-            <div class="col-3 border">
+            <div class="col-3">
                 <a href="/admin/app1/tooltyp/{{type.0.id}}/change/" target="_blank">{{type.0}}</a>
             </div>
             {% comment %} Arbeitsspeicher {% endcomment %}
-            <div class="col-9 border">
+            <div class="col-9">
                 <details>
                     <summary>Anzahl {{type.2}}</summary>
                     {% for tool in type.1%}

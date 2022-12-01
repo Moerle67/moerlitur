@@ -69,10 +69,10 @@ class FormAuswahl:
     liste = ""
     value = ""
     name = ""
-    def __init__(self, name, liste, value=0, aktiv=True, submit=False, label=True):
-            self.liste = liste
+    def __init__(self, name, daten, value=0, aktiv=True, submit=False, label=True):
             self.submit = submit
             self.label = label
+            self.daten = daten
             try:
                 self.value = int(value)
             except:
@@ -80,10 +80,6 @@ class FormAuswahl:
             self.name = name
             self.aktiv = aktiv
     def __str__(self):
-        if self.aktiv:
-            daten = self.liste.objects.filter(aktiv=True)
-        else:
-            daten = self.liste.objects.filter()
         antwort=""    
         if self.label:
             antwort = '\n<label for="'+self.name+'">'+self.name+': </label>\n'
@@ -91,14 +87,45 @@ class FormAuswahl:
         if self.submit:
             antwort+= ' onchange="this.form.submit()" '
         antwort += 'name="'+self.name+'" class="form-control">\n'
-        for zeile in daten:
+        for zeile in self.daten:
             antwort += '<option value="'+str(zeile.id)+'"'
             if zeile.id == self.value:
                 antwort += "selected "
-            antwort +='>'+str(zeile)+'</option>\n'
+            antwort +='>'+str(zeile)+'</option>'
         antwort += '</select>\n'
+        return antwort
 
-
+class FormDatalist:
+    liste = ""
+    name = ""
+    def __init__(self, name, daten, value="", aktiv=True, submit=False, label=True, funktion=""):
+            self.submit = submit
+            self.label = label
+            self.daten = daten
+            self.value = value
+            self.name = name
+            self.aktiv = aktiv
+            self.funktion = funktion
+    def __str__(self):
+        antwort=""    
+        if self.label:
+            antwort = '\n<label for="'+self.name+'">'+self.name+': </label>\n'
+        antwort += f'<input list="{self.name}" name="txt_{self.name}" id="txt_{self.name}"'
+        if self.value != "":
+            antwort += f' value="{self.value}"'
+        antwort += '><datalist '
+        antwort += f'id ="{self.name}"'
+        if self.submit:
+            antwort+= ' onchange="this.form.submit()" '
+        antwort += 'name="'+self.name+'">\n'
+        for zeile in self.daten:
+            if self.funktion=="":
+                antwort += f'<option value="{zeile}"'
+            else:
+                antwort += f'<option value="{self.funktion(zeile)}"'
+            antwort +='>'
+        antwort += '</datalist>\n'
+        antwort += f"<input type='submit' name='button' value='{self.name}_Ok'>"
         return antwort
 
 class FormBtn:
@@ -173,7 +200,7 @@ class FormBtnRemove:
         antwort +=  '</button>'
         return antwort
 
-def formZeile(*liste):
+def formRow(*liste):
     antwort = '<div class="form-row">\n'
     for element in liste:
         antwort += '<div class="col">' 
