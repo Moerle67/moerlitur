@@ -89,6 +89,8 @@ def tools(request):
 
 @permission_required('app1.change_tools')
 def tools_neu(request):
+    id_ort = id_raum = -1
+    val_raum = val_ort = val_standort =""
     def strip(text):
         return str(text).split("/")[-1]
     val_ort = ""
@@ -108,10 +110,11 @@ def tools_neu(request):
         except:
             id_raum = -1
             print(f"Raum nicht gefunden '{val_raum}'")
+        val_standort = request.POST["txt_Standort"]
 
     frm_ort = FormDatalist("Ort",Ort.objects.filter(aktiv=True), submit=True, value=val_ort)
     frm_raum = FormDatalist("Raum",Raum.objects.filter(aktiv=True, ort__id=id_ort ), value=val_raum, submit=True, funktion=strip)
-    frm_platz = FormDatalist("Standort",Standort.objects.filter(aktiv=True, raum__id=id_raum), submit=True, funktion=strip)
+    frm_platz = FormDatalist("Standort",Standort.objects.filter(aktiv=True, raum__id=id_raum), value=val_standort, submit=True, funktion=strip)
     forms = (frm_ort, frm_raum, frm_platz,formLinie ,FormBtnSave, FormBtnCancel)
     ueber = "Erfasse Tool"
     return render(request, 'app1/form_allg.html', {'ueber': "Tool erfassen", 'forms': forms, 'ueber': ueber})
