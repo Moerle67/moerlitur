@@ -5,51 +5,73 @@ Computer
 {% endblock h1 %}
 
 {% block content %}
+    <div class="accordion" id="accordion1">
     {% for einzel_rechner in rechner %}
-        <div class="row border">
-            {% comment %} Computer {% endcomment %}
-            <div class="col-3 border">
-                <details>
-                    <summary><a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">C{{einzel_rechner.0.2}}</a></summary>
-                    <a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">{{einzel_rechner.0.1}}</a><br />
-                    <a href="/admin/app1/standort/{{einzel_rechner.0.1.id}}/change/" target="_blank">{{einzel_rechner.0.0}}</a>
-                </details>
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{einzel_rechner.0.2}}" aria-expanded="true" aria-controls="collapse{{einzel_rechner.0.2}}">
+                    C{{einzel_rechner.0.2}} - {{einzel_rechner.0.1.bezeichnung}}
+                </button>
             </div>
-            {% comment %} Arbeitsspeicher {% endcomment %}
-            <div class="col-3 border">
-                <details>
-                    <summary>{{einzel_rechner.3}} x Arbeitsspeicher {{einzel_rechner.2}} GB</summary>
-                    {% for as_einzel in einzel_rechner.1%}
-                        <a href="/admin/app1/arbeitsspeicher/{{as_einzel.1}}/change/" target="_blank">{{as_einzel.0}}</a><br />
-                    {% endfor %}
-                </details>
+            <div id="collapse{{einzel_rechner.0.2}}" class="accordion-collapse collapse show" data-bs-parent="#accordion1">
+                <div class="accordion-body">
+                    <div class="card">
+                        <div class="card-body">                   
+                            <h5 class = "card-title">
+                                Stammdaten
+                            </h5>
+                            <a href="/admin/app1/computer/{{einzel_rechner.0.2}}/change/" target="_blank">{{einzel_rechner.0.0}}</a><br />
+                            <a href="/admin/app1/standort/{{einzel_rechner.0.1.id}}/change/" target="_blank">{{einzel_rechner.0.1}}</a>  
+                        </div>     
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class = "card-title">
+                                {{einzel_rechner.3}} x Arbeitsspeicher {{einzel_rechner.2}} GB
+                            </h5>
+                            <div class="card-text">
+                                {% for as_einzel in einzel_rechner.1%}
+                                    <a href="/admin/app1/arbeitsspeicher/{{as_einzel.1}}/change/" target="_blank">{{as_einzel.0}}</a><br />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class = "card-title">
+                                {{einzel_rechner.5}} x Massenspeicher
+                            </h5>
+                            <div class="card-text">
+                                {% for ms_einzel in einzel_rechner.4%}
+                                    <a href="/admin/app1/massenspeicher/{{ms_einzel.1}}/change/" target="_blank">{{ms_einzel.0}}</a><br />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class = "card-title">
+                                NIC
+                            </h5>
+                            {% if  einzel_rechner.7 < 2%}
+                                {% if einzel_rechner.7 == 0 %}
+                                    Keine Netzwerkkarte
+                                {% else %}
+                                    <a href="/admin/app1/nic/{{einzel_rechner.6.0.1}}/change/" target="_blank">{{einzel_rechner.6.0.0}}</a>
+                                {% endif %}
+                            {% else %}
+                                <h5 class = "card-title" > {{einzel_rechner.7}} x Netzwerkkarten</h5>
+                                {% for nic_einzel in einzel_rechner.6%}
+                                    <div class="card-text">
+                                        <a href="/admin/app1/nic/{{nic_einzel.1}}/change/" target="_blank">{{nic_einzel.0}}</a><br />
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>    
+                </div>
             </div>
-            {% comment %} Massenspeicher {% endcomment %}
-            <div class="col-3 border">
-                <details>
-                <summary>{{einzel_rechner.5}} x Massenspeicher</summary>
-                {% for ms_einzel in einzel_rechner.4%}
-                    <a href="/admin/app1/massenspeicher/{{ms_einzel.1}}/change/" target="_blank">{{ms_einzel.0}}</a><br />
-                {% endfor %}
-                </details>
-            </div>
-            {% comment %} NIC {% endcomment %}
-            <div class="col-3 border">
-                {% if  einzel_rechner.7 < 2%}
-                    {% if einzel_rechner.7 == 0 %}
-                        <p>Keine Netzwerkkarte</p>
-                    {% else %}
-                        <a href="/admin/app1/nic/{{einzel_rechner.6.0.1}}/change/" target="_blank">{{einzel_rechner.6.0.0}}</a>
-                    {% endif %}
-                {% else %}
-                    <details>
-                    <summary>{{einzel_rechner.7}} x Netzwerkkarten</summary>
-                    {% for nic_einzel in einzel_rechner.6%}
-                        <a href="/admin/app1/nic/{{nic_einzel.1}}/change/" target="_blank">{{nic_einzel.0}}</a><br />
-                    {% endfor %}
-                    </details>
-                {% endif %}
-            </div>
-        </div>
+        </div>    
     {% endfor %}
+    </div>
 {% endblock content %}
